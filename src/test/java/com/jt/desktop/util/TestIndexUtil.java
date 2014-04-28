@@ -9,7 +9,10 @@ public class TestIndexUtil {
 	
 	@Test
     public void test01() throws Exception {
-	    IndexUtil.index("D:/develop/hadoop/hadoop-1.1.2/docs");
+		long start = System.currentTimeMillis();
+		IndexUtil.index(PropertiesUtil.get("content.path"));
+		long end = System.currentTimeMillis();
+		System.out.println("cost "+(end-start)/1000 + " seconds.");
     }
 	
 	@Test

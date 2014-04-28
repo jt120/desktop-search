@@ -30,7 +30,7 @@ public class SearchUtil {
 	private static final Logger log = Logger.getLogger(SearchUtil.class);
 
 	private static Version version = Version.LUCENE_47;
-	private static String path = "d:/test/index";
+	private static String path = PropertiesUtil.get("index.path");
 	
 	private static Directory directory;
 	private static Analyzer analyzer;
@@ -56,7 +56,7 @@ public class SearchUtil {
 		query.add(q2, Occur.SHOULD);
 		List<SearchFile> list = new ArrayList<SearchFile>();
 		try {
-	        TopDocs topDocs = indexSearcher.search(query, 100);
+	        TopDocs topDocs = indexSearcher.search(query, Integer.MAX_VALUE);
 	        ScoreDoc[] sds = topDocs.scoreDocs;
 	        log.info("find " + sds.length + " results");
 	        for(ScoreDoc s:sds) {

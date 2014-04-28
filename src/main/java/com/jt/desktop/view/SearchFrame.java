@@ -26,7 +26,9 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import com.jt.desktop.model.SearchFile;
+import com.jt.desktop.thread.Scheduler;
 import com.jt.desktop.util.IndexUtil;
+import com.jt.desktop.util.PropertiesUtil;
 import com.jt.desktop.util.SearchUtil;
 
 public class SearchFrame extends JFrame {
@@ -73,7 +75,7 @@ public class SearchFrame extends JFrame {
 		searchInput = new JTextField(20);
 		searchInput.addKeyListener(new MyKeyEvent());
 
-		//初始化，查询所有数据
+		//init all data
 		Object[][] objs = listFile("*");
 		table = new JTable(objs, columnNames);
 		table.setRowHeight(20);
@@ -88,7 +90,7 @@ public class SearchFrame extends JFrame {
 		this.add(contentPanel,BorderLayout.CENTER);
 		this.setVisible(true);
 	}
-	//搜索输入框监听器
+	//search input listener
 	class MyKeyEvent extends KeyAdapter {
 		
 		@Override
@@ -100,7 +102,7 @@ public class SearchFrame extends JFrame {
 	        table.repaint();
         }
 	}
-	//窗口监听器
+	//windows listener
 	class MyWindowsEvent extends WindowAdapter {
 		
 		@Override
@@ -111,23 +113,19 @@ public class SearchFrame extends JFrame {
         }
 		
 	}
-	//菜单监听器
+	//menu listener
 	class MyMenuListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
 			String command = e.getActionCommand();
 			if(command.equals("create")) {
-				try {
-	                IndexUtil.getIndexWriter().deleteAll();
-                } catch (IOException e1) {
-	                e1.printStackTrace();
-                }
-				IndexUtil.index("D:\\develop\\java\\docs\\tutorial\\uiswing");
+	            IndexUtil.delete();
+				Scheduler.run();
 			}
         }
 		
 	}
-	
+	//
 	class MyTableListener extends MouseAdapter {
 
 		public void mouseClicked(MouseEvent e) {

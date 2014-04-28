@@ -10,8 +10,6 @@ public class SearchFile {
 	
 	private long editTime;
 
-	
-
 	public SearchFile(String name, String path, long size) {
 	    super();
 	    this.name = name;
